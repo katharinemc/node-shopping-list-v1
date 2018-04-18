@@ -1,3 +1,4 @@
+'use strict';
 
 const express = require('express');
 // we'll use morgan to log the HTTP layer
@@ -9,6 +10,7 @@ const bodyParser = require('body-parser');
 // we import the ShoppingList model, which we'll
 // interact with in our GET endpoint
 const {ShoppingList} = require('./models');
+const {Recipes} = require('./models');
 
 const jsonParser = bodyParser.json();
 const app = express();
@@ -29,6 +31,16 @@ ShoppingList.create('peppers', 4);
 // all current ShoppingList items by calling `ShoppingList.get()`
 app.get('/shopping-list', (req, res) => {
   res.json(ShoppingList.get());
+});
+
+
+Recipes.create('Peanut butter sandwich', ['bread', 'jam', 'peanutbutter']);
+Recipes.create('Shakshuka', ['eggs', 'tomatoes', 'peppers']);
+Recipes.create('Green bean curry', ['Red curry paste', 'green beans', 'coconut milk']);
+
+
+app.get('/recipes', (rew, res) => {
+  res.json(Recipes.get());
 });
 
 app.listen(process.env.PORT || 8080, () => {
